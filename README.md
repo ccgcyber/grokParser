@@ -10,9 +10,9 @@ Some grok structure of the Sidewinder Firewall output
 List of types and events:
 ########## t_ipftraffic:
 
-..*IP Filter session timeout
-..*IP Filter session close
-..*IP Filter session open
+*IP Filter session timeout.
+*IP Filter session close.
+*IP Filter session open.
 
 ########## t_nettraffic:
 
