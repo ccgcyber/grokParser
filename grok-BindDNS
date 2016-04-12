@@ -1,0 +1,6 @@
+DNS_DATE %{MONTHDAY}-%{MONTH}-%{YEAR} %{TIME}
+
+PM ([+-])
+CHAR_UP ([A-Z])
+
+DNS_BIND_QLOG %{DNS_DATE:Timestamp} queries: info: client %{IP:ClientIP}#%{NUMBER:ClientPort} %{GREEDYDATA} query: %{URIHOST:Query} %{WORD:Class} %{WORD:Type} (%{PM:RecursionRequest})?(%{CHAR_UP:Request})?(%{CHAR_UP:EDNS0})?(%{CHAR_UP:DNSSEC})?(%{CHAR_UP:CheckingDisabled})?(%{CHAR_UP:Protocol})? \(%{IP:NameServer}\)

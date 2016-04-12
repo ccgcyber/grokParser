@@ -1,0 +1,85 @@
+#FORTIGATE 
+
+
+
+BACK \",\"%{GREEDYDATA}\"%{TIMESTAMP_ISO8601:RealTimestamp}\",\"type\":\"%{DATA:LogType}\",\"host\":\"%{IP:LogIP}\"}
+
+
+FORTIDATE %{YEAR:year}\-%{MONTHNUM:month}\-%{MONTHDAY:day}
+
+
+
+FORTIGATE_BASE %{GREEDYDATA}<%{NUMBER:syslog_index}>date=%{GREEDYDATA}( time=%{GREEDYDATA})? devname=%{HOST:hostname} devid=%{HOST:devid} logid=%{NUMBER:logid} type=%{DATA} subtype=%{DATA} level=%{DATA:Level} vd=%{DATA:vdom} srcip=%{IP:srcip} srcport=%{NUMBER:srcport} srcintf=\\\"%{DATA:srcintf}\\\" dstip=%{IP:dstip} dstport=%{NUMBER:dstport} dstintf=\\\"%{DATA:dstintf}\\\" sessionid=%{NUMBER} status=%{DATA:action} policyid=%{NUMBER:policyid} dstcountry=\\\"%{DATA:dstcountry}\\\" srccountry=\\\"%{DATA:srccountry}\\\" trandisp=%{DATA:trandisp}
+
+ 
+
+FORTIGATE_BASE_ALT %{GREEDYDATA}<%{NUMBER:syslog_index}>date=%{GREEDYDATA}( time=%{GREEDYDATA})? devname=%{DATA:hostname} devid=%{DATA:devid} logid=%{NUMBER:logid} type=%{DATA} subtype=%{DATA} level=%{DATA:Level}
+
+ 
+
+FORTIGATE_BYTE duration=%{NUMBER:duration} sentbyte=%{NUMBER:sentbyte} rcvdbyte=%{NUMBER:rcvdbyte}
+
+ 
+
+FORTIGATE_PKT sentpkt=%{NUMBER:sentpkt} rcvdpkt=%{NUMBER:rcvdpkt}
+
+ 
+
+FORTIGATE_BYTE_PKT %{FORTIGATE_BYTE} %{FORTIGATE_PKT}
+
+
+# SIMPLIFYING FOR THE CONFIG FILES
+
+
+F1 %{FORTIGATE_BASE} tranip=%{IP:tranip} tranport=%{NUMBER:transport} service=%{DATA:service} proto=%{NUMBER:proto} %{FORTIGATE_BYTE_PKT}%{BACK}
+
+
+F2 %{FORTIGATE_BASE} tranip=%{IP:tranip} tranport=%{NUMBER:tranport} transip=%{IP:transip} transport=%{NUMBER:transport} service=%{DATA:service} proto=%{NUMBER:proto} %{FORTIGATE_BYTE_PKT}%{BACK}
+
+ 
+F3 %{FORTIGATE_BASE} service=%{DATA:service} proto=%{NUMBER:proto} app=\\\"%{DATA:application}\\\" %{FORTIGATE_BYTE_PKT}%{BACK}
+
+
+F4 %{FORTIGATE_BASE} service=%{DATA:service} proto=%{NUMBER:proto} app=%{DATA:application} %{FORTIGATE_BYTE_PKT}%{BACK}
+
+
+F5 %{FORTIGATE_BASE} service=%{DATA:service} proto=%{NUMBER:proto} %{FORTIGATE_BYTE_PKT}%{BACK}
+
+ 
+F6 %{FORTIGATE_BASE} service=%{DATA:service} proto=%{NUMBER:proto} app=\\\"%{DATA:application}\\\" %{FORTIGATE_BYTE}%{BACK}
+
+ 
+F7 %{FORTIGATE_BASE} service=%{DATA:service} proto=%{NUMBER:proto} app=%{DATA:application} %{FORTIGATE_BYTE}%{BACK}
+
+
+F8 %{FORTIGATE_BASE_ALT} vd=%{DATA:vdom} srcip=%{IP:srcip} srcport=%{NUMBER:srcport} srcintf=\\\"%{DATA:srcintf}\\\" dstip=%{IP:dstip} dstport=%{NUMBER:dstport} dstintf=\\\"%{DATA:dstintf}\\\" sessionid=%{NUMBER} status=%{DATA:action} policyid=%{NUMBER:policyid} dstcountry=\\\"%{DATA:dstcountry}\\\" srccountry=\\\"%{DATA:srccountry}\\\" trandisp=%{DATA} transip=%{IP:transip} transport=%{NUMBER:transport} service=%{DATA:service}%{BACK}
+
+
+F9 %{FORTIGATE_BASE_ALT} vd=%{DATA:vdom} srcip=%{IP:srcip} srcport=%{NUMBER:srcport} srcintf=\\\"%{DATA:srcintf}\\\" dstip=%{IP:dstip} dstport=%{NUMBER:dstport} dstintf=%{DATA:dstintf} sessionid=%{NUMBER:sessionid} status=%{DATA:action} policyid=%{NUMBER:policyid} dstcountry=\\\"%{DATA:dstcountry}\\\" srccountry=\\\"%{DATA:srccountry}\\\" trandisp=%{DATA:trandisp} service=%{DATA:service} proto=%{NUMBER:proto} app=\\\"%{DATA:application}\\\" %{FORTIGATE_BYTE}%{BACK}
+
+ 
+F10 %{FORTIGATE_BASE_ALT} vd=%{DATA:vdom} srcip=%{IP:srcip} srcintf=\\\"%{DATA:srcintf}\\\" dstip=%{IP:dstip} dstintf=\\\"%{DATA:dstintf}\\\" sessionid=%{NUMBER} status=%{DATA:action} policyid=%{NUMBER:policyid} dstcountry=\\\"%{DATA:dstcountry}\\\" srccountry=\\\"%{DATA:srccountry}\\\" trandisp=%{DATA:trandisp} service=%{DATA:service} proto=%{NUMBER:proto} %{FORTIGATE_BYTE_PKT}%{BACK}
+
+ 
+F11 %{FORTIGATE_BASE_ALT} vd=%{DATA:vdom} srcip=%{IP:srcip} srcintf=\\\"%{DATA:srcintf}\\\" dstip=%{IP:dstip} dstintf=\\\"%{DATA:dstintf}\\\" sessionid=%{NUMBER} status=%{DATA:action} policyid=%{NUMBER:policyid} dstcountry=\\\"%{DATA:dstcountry}\\\" srccountry=\\\"%{DATA:srccountry}\\\" trandisp=%{DATA:trandisp} service=%{DATA:service} proto=%{NUMBER:proto} app=%{DATA:app} %{FORTIGATE_BYTE_PKT}%{BACK}
+
+ 
+F12 %{FORTIGATE_BASE_ALT} vd=%{DATA:vdom} action=%{DATA:action} tunneltype=%{DATA:tunneltype} tunnel_id=%{NUMBER:tunnel_id} remote_ip=%{IP:srcip} tunnel_ip=%{DATA:tunnel_ip} user=%{DATA:user} group=%{DATA:group} dst_host=%{DATA:dstip} reason=%{DATA:action} msg=%{DATA:msg}%{BACK}
+
+
+F13 %{FORTIGATE_BASE_ALT} vd=\\\"%{DATA:vdom}\\\" action=\\\"%{DATA:action}\\\" tunneltype=\\\"%{DATA:tunneltype}\\\" tunnel_id=%{NUMBER:tunnel_id} remote_ip=%{IP:srcip} tunnel_ip=%{DATA:tunnel_ip} user=\\\"%{DATA:user}\\\" group=\\\"%{DATA:group}\\\" dst_host=\\\"%{DATA:dstip}\\\" reason=\\\"%{DATA:action}\\\" msg=\\\"%{DATA:msg}\\\"%{BACK}
+
+ 
+F14 %{FORTIGATE_BASE_ALT} vd=\\\"%{DATA:vdom}\\\" action=\\\"%{DATA:action}\\\" tunneltype=\\\"%{DATA:tunneltype}\\\" tunnel_id=%{NUMBER:tunnel_id} remote_ip=%{IP:srcip} tunnel_ip=%{IP:tunnel_ip} user=\\\"%{DATA:user}\\\" group=\\\"%{DATA:group}\\\" dst_host=\\\"%{DATA:dstip}\\\" reason=\\\"%{DATA:action}\\\" duration=%{NUMBER:duration} sent=%{NUMBER:sentbyte} rcvd=%{NUMBER:rcvdbyte} msg=\\\"%{DATA:msg}\\\"%{BACK}"
+
+
+F15 %{FORTIGATE_BASE} service=%{DATA:service} proto=%{NUMBER:proto} %{FORTIGATE_BYTE}%{BACK}
+
+
+F16 %{FORTIGATE_BASE_ALT} vd=\\\"%{DATA:vdom}\\\"( action=%{DATA:action})? msg=\\\"%{DATA:msg}\\\"%{BACK}
+
+
+F17 %{FORTIGATE_BASE_ALT} vd=\\\"%{DATA:vdom}\\\" ui=%{IP:uiip}( action=%{DATA:action})? status=%{DATA:status} reason=%{DATA:reason} msg=\\\"%{DATA:msg}\\\"%{BACK}
+
+
+
