@@ -8,11 +8,11 @@ The grok structure is based on the Fortinet 5.0 OS structure
 Some grok structure of the Sidewinder Firewall output
 
 List of types and events:
-########## t_ipftraffic:
+########## t_ipftraffic
 
-*IP Filter session timeout.
-*IP Filter session close.
-*IP Filter session open.
+* IP Filter session timeout.
+* IP Filter session close.
+* IP Filter session open.
 
 ########## t_nettraffic:
 
